@@ -1,7 +1,7 @@
-INCLUDE=/usr/local/include/freebasic/BB/
-LIB=/usr/local/lib/freebasic/
+all: test_pwm
 
-all: pwm_driver
+test_pwm: test_pwm.c pwm_control pwm_driver gpio_control system
+	gcc -o test_pwm test_pwm.c -L. -lpwm_driver
 
 pwm_driver: pwm_driver.c pwm_driver pwm_control gpio_control system
 	gcc -c pwm_driver.c -o pwm_driver.o
