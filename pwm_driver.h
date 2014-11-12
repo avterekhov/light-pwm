@@ -1,42 +1,56 @@
+/**
+ * Aliases for pwm driver types and functions.
+ *
+ * The name of the driver should be defined in PWM_DRIVER_NAME
+ * The default is set to 1
+ */
+
 #ifndef __PWM_DRIVER_H
 #define __PWM_DRIVER_H
 
-#include "pwm_control.h"
-#include "gpio_control.h"
+#ifndef PWM_DRIVER_NAME
+#define PWM_DRIVER_NAME 1
+#endif
 
-typedef const struct {
-  int        id;
-  pwm_pin_t  pwm;
-  gpio_pin_t gpio;
-} pwm_driver_descriptor_t;
+#define STRINGIFY(A) _STRINGIFY(A)
+#define _STRINGIFY(A) #A
 
-typedef pwm_driver_descriptor_t* pwm_driver_descriptor_ptr;
+#define __include_pwm_driver(driver_name) pwm_driver##driver_name
+#define _include_pwm_driver(driver_name) __include_pwm_driver(driver_name)
+#define include_pwm_driver _include_pwm_driver(PWM_DRIVER_NAME)
+#define _add_dot_h(str) str.h
+#define _pwm_driver_filename _add_dot_h(include_pwm_driver)
 
-static pwm_driver_descriptor_t PWM_DRIVER1_DSC = {1, PIN_P9_14, PIN_P9_12};
-static pwm_driver_descriptor_t PWM_DRIVER2_DSC = {2, PIN_P9_16, PIN_P9_42};
-static pwm_driver_descriptor_t PWM_DRIVER3_DSC = {3, PIN_P9_21, PIN_P9_42};
-static pwm_driver_descriptor_t PWM_DRIVER4_DSC = {4, PIN_P9_22, PIN_P8_46};
-static pwm_driver_descriptor_t PWM_DRIVER5_DSC = {5, PIN_P8_19, PIN_P8_30};
-static pwm_driver_descriptor_t PWM_DRIVER6_DSC = {6, PIN_P8_13, PIN_P8_4};
+#include STRINGIFY(_pwm_driver_filename)
 
-static pwm_driver_descriptor_ptr PWM_DRIVER1 = &PWM_DRIVER1_DSC;
-static pwm_driver_descriptor_ptr PWM_DRIVER2 = &PWM_DRIVER2_DSC;
-static pwm_driver_descriptor_ptr PWM_DRIVER3 = &PWM_DRIVER3_DSC;
-static pwm_driver_descriptor_ptr PWM_DRIVER4 = &PWM_DRIVER4_DSC;
-static pwm_driver_descriptor_ptr PWM_DRIVER5 = &PWM_DRIVER5_DSC;
-static pwm_driver_descriptor_ptr PWM_DRIVER6 = &PWM_DRIVER6_DSC;
+#define __pwm_driver_descriptor_t(driver_name)   pwm_driver##driver_name##_descriptor_t
+#define __pwm_driver_descriptor_ptr(driver_name) pwm_driver##driver_name##_descriptor_ptr
+#define __pwm_driver_t(driver_name)              pwm_driver##driver_name##_t
+#define __pwm_driver_prepare_device(driver_name) pwm_driver##driver_name##_prepare_device
+#define __pwm_driver_open(driver_name)           pwm_driver##driver_name##_open
+#define __pwm_driver_close(driver_name)          pwm_driver##driver_name##_close
+#define __pwm_driver_enable(driver_name)         pwm_driver##driver_name##_enable
+#define __pwm_driver_disable(driver_name)        pwm_driver##driver_name##_disable
+#define __pwm_driver_set_command(driver_name)    pwm_driver##driver_name##_set_command
 
-typedef struct {
-  pwm_t* pwm;
-  gpio_pin_t gpio_pin;
-} pwm_driver_t;
+#define _pwm_driver_descriptor_t(driver_name)   __pwm_driver_descriptor_t(driver_name)
+#define _pwm_driver_descriptor_ptr(driver_name) __pwm_driver_descriptor_ptr(driver_name)
+#define _pwm_driver_t(driver_name)              __pwm_driver_t(driver_name)
+#define _pwm_driver_prepare_device(driver_name) __pwm_driver_prepare_device(driver_name)
+#define _pwm_driver_open(driver_name)           __pwm_driver_open(driver_name)
+#define _pwm_driver_close(driver_name)          __pwm_driver_close(driver_name)
+#define _pwm_driver_enable(driver_name)         __pwm_driver_enable(driver_name)
+#define _pwm_driver_disable(driver_name)        __pwm_driver_disable(driver_name)
+#define _pwm_driver_set_command(driver_name)    __pwm_driver_set_command(driver_name)
 
-pwm_driver_t* pwm_driver_open(pwm_driver_descriptor_ptr driver_id);
-int pwm_driver_prepare_device(pwm_driver_descriptor_ptr driver_id);
-void pwm_driver_close(pwm_driver_t* pwm_driver);
-int pwm_driver_enable(pwm_driver_t* pwm_driver);
-int pwm_driver_disable(pwm_driver_t* pwm_driver);
-int pwm_driver_set_period(pwm_driver_t* pwm_driver, long period);
-int pwm_driver_set_command(pwm_driver_t* pwm_driver, float command);
+#define pwm_driver_descriptor_t   _pwm_driver_descriptor_t(PWM_DRIVER_NAME)
+#define pwm_driver_descriptor_ptr _pwm_driver_descriptor_ptr(PWM_DRIVER_NAME)
+#define pwm_driver_t              _pwm_driver_t(PWM_DRIVER_NAME)
+#define pwm_driver_prepare_device _pwm_driver_prepare_device(PWM_DRIVER_NAME)
+#define pwm_driver_open           _pwm_driver_open(PWM_DRIVER_NAME)
+#define pwm_driver_close          _pwm_driver_close(PWM_DRIVER_NAME)
+#define pwm_driver_enable         _pwm_driver_enable(PWM_DRIVER_NAME)
+#define pwm_driver_disable        _pwm_driver_disable(PWM_DRIVER_NAME)
+#define pwm_driver_set_command    _pwm_driver_set_command(PWM_DRIVER_NAME)
 
 #endif

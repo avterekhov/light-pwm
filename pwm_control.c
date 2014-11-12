@@ -66,7 +66,6 @@ int pwm_device_is_ready(pwm_pin_t pin) {
   return pwm_read_run_file(pin, &foo);
 }
 
-/* does not work properly. DEBUG!!! */
 int pwm_prepare_device(pwm_pin_t pin) {
   char str[1024];
   int nbytes;

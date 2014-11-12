@@ -9,6 +9,7 @@ static const char GPIO_OUT_STR[] = "out";
 
 typedef enum {			\
   PIN_P8_4  = 39,		\
+  PIN_P8_8  = 67,		\
   PIN_P8_30 = 89,		\
   PIN_P8_46 = 71,		\
 				\
