@@ -7,14 +7,30 @@ static const char GPIO_VALUE_STR[] = "value";
 static const char GPIO_IN_STR[] = "in";
 static const char GPIO_OUT_STR[] = "out";
 
-typedef enum {			\
-  PIN_P8_4  = 39,		\
-  PIN_P8_8  = 67,		\
-  PIN_P8_30 = 89,		\
-  PIN_P8_46 = 71,		\
-				\
-  PIN_P9_12 = 60,		\
-  PIN_P9_42 =  7,		\
+typedef enum {
+  PIN_P8_4  = 39, /* used by MMC by default */
+  PIN_P8_7  = 66, /* freely availble */
+  PIN_P8_8  = 67, /* freely availble */
+  PIN_P8_9  = 69, /* freely availble */
+  PIN_P8_10 = 68, /* freely availble */
+  PIN_P8_11 = 45, /* freely availble */
+  PIN_P8_12 = 44, /* freely availble */
+  PIN_P8_14 = 26, /* freely availble */
+  PIN_P8_15 = 47, /* freely availble */
+  PIN_P8_16 = 46, /* freely availble */
+  PIN_P8_17 = 27, /* freely availble */
+  PIN_P8_18 = 65, /* freely availble */
+  PIN_P8_26 = 61, /* freely availble */
+  PIN_P8_30 = 89, /* used by LCD by default */
+  PIN_P8_46 = 71, /* used by LCD by default */
+
+  PIN_P9_12 = 60, /* freely availble */
+  PIN_P9_15 = 48, /* freely availble */
+  PIN_P9_23 = 49, /* freely availble */
+  PIN_P9_25 = 117,/* freely availble */
+  PIN_P9_27 = 115,/* freely availble */
+  PIN_P9_30 = 122,/* freely availble */
+  PIN_P9_41 = 20  /* freely availble */
 } gpio_pin_t;
 
 typedef enum {GPIO_DIRECTION = 1, GPIO_VALUE} gpio_file_t;
